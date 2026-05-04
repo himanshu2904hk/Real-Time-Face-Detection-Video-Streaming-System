@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-faceuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-facepass}
+      POSTGRES_DB: ${POSTGRES_DB:-facedb}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-faceuser} -d $${POSTGRES_DB:-facedb}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    # No published port: the DB is internal-only. Keeps attack surface small.
+
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql+psycopg2://${POSTGRES_USER:-faceuser}:${POSTGRES_PASSWORD:-facepass}@db:5432/${POSTGRES_DB:-facedb}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:3000}
+      MAX_FRAME_BYTES: ${MAX_FRAME_BYTES:-2000000}
+    ports:
+      - "8000:8000"
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_BACKEND_HTTP: ${VITE_BACKEND_HTTP:-http://localhost:8000}
+        VITE_BACKEND_WS: ${VITE_BACKEND_WS:-ws://localhost:8000}
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres-data:
