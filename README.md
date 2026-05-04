@@ -5,7 +5,7 @@ over WebSocket to a FastAPI backend, which detects a face, persists the ROI to
 PostgreSQL, draws an axis-aligned bounding box (without OpenCV), and streams the
 processed frames back for display.
 
-![Architecture](frontend/architecture-diagram.png)
+![Architecture](architecture-diagram.png)
 
 ## Quick start (5 minutes)
 
