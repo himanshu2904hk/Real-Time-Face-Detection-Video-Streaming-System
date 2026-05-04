@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+dist/
+.vite/
+npm-debug.log*
+
+# Environment
+.env
+.env.local
+*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Database
+postgres-data/
+*.sqlite
+*.db
+
+# Build artifacts
+*.log
+
+# Bundles / archives
+*.tar.gz
+*.bundle
+
+# Local pytest cache dirs
+pytest-cache-files-*/
