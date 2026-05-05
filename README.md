@@ -7,6 +7,14 @@ processed frames back for display.
 
 ![Architecture](architecture-diagram.png)
 
+## Demo
+
+A short walkthrough of the running app — webcam capture, live overlay, ROI dashboard, and persisted history:
+
+https://github.com/himanshu2904hk/Real-Time-Face-Detection-Video-Streaming-System/raw/main/docs/demo.mp4
+
+> Click the link above to play, or [download the file directly](docs/demo.mp4).
+
 ## Quick start (5 minutes)
 
 **Prerequisites:** Docker Desktop (or Docker Engine + Compose v2) and a webcam.
